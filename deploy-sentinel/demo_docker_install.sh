@@ -10,15 +10,15 @@ DEPLOY_BOARD_VERSION=fdd68c0
 DEPLOY_SENTINEL_VERSION=fdd68c0
 AGENT_VERSION=1.2.3
 
-rm -fr ~/teletraan-demo
+rm -fr /srv/teletraan-demo
 rm -fr /tmp/teletraan
 rm -fr /tmp/deployd
 rm -fr /tmp/deploy-board
 
 cd ~
-mkdir -p teletraan-demo
+mkdir -p /srv/teletraan-demo
 
-cd ~/teletraan-demo
+cd /srv/teletraan-demo
 mkdir -p deploy-service
 curl -L https://github.com/pinterest/teletraan/releases/download/${RELEASE_VERSION}/teletraan-service-${DEPLOY_SERVICE_VERSION}.tar.gz | tar zxf - -C deploy-service
 echo "Teletraan server downloaded"
@@ -32,7 +32,7 @@ sed -i -e 's/#type: embedded/type: embedded/' ./deploy-service/bin/server.yaml
 sed -i -e 's/#workDir: \/tmp\/teletraan\/db/workDir: \/tmp\/teletraan\/db/' ./deploy-service/bin/server.yaml
 echo "Edited server.yaml to user embedded database"
 
-cd ~/teletraan-demo
+cd /srv/teletraan-demo
 virtualenv ./venv
 source ./venv/bin/activate
 mkdir -p deploy-board
@@ -44,13 +44,13 @@ mkdir -p /tmp/deploy_board
 ./run.sh start
 echo "Deploy board is running"
 
-cd ~/teletraan-demo
+cd /srv/teletraan-demo
 mkdir -p deploy-sentinel
 curl -L https://github.com/pinterest/teletraan/releases/download/${RELEASE_VERSION}/deploy-sentinel-${DEPLOY_SENTINEL_VERSION}.tar.gz | tar zxf - -C deploy-sentinel --strip-components=1
-cd ~/teletraan-demo/deploy-sentinel
+cd /srv/teletraan-demo/deploy-sentinel
 echo "Deploy sentinel downloaded"
 
-cd ~/teletraan-demo
+cd /srv/teletraan-demo
 mkdir -p deploy-agent
 curl -L https://github.com/pinterest/teletraan/releases/download/${RELEASE_VERSION}/deploy-agent-${AGENT_VERSION}.zip > ./deploy-agent/deploy-agent-${AGENT_VERSION}.zip
 echo "Deploy agent downloaded"
