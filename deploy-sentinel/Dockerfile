@@ -14,13 +14,17 @@ RUN groupadd -r teletraan && useradd -r -g teletraan teletraan
 COPY ./demo_docker_install.sh /srv/teletraan/demo_docker_install.sh
 RUN chmod +x /srv/teletraan/demo_docker_install.sh
 RUN /srv/teletraan/demo_docker_install.sh
-RUN chown -R teletraan /srv/teletraan-demo
+COPY ./docker_run.sh /srv/teletraan-demo/deploy-service/bin/docker_run.sh
+RUN mkdir /tmp/teletraan
+RUN mkdir /tmp/teletraan-demo
+RUN chown -R teletraan /tmp/teletraan-demo
+RUN chown -R teletraan /tmp/teletraan
 VOLUME /tmp/teletraan
 EXPOSE 8888
 EXPOSE 3306
 
 USER teletraan
-CMD ["/srv/teletraan-demo/deploy-service/bin/run.sh", "start"]
+CMD ["/srv/teletraan-demo/deploy-service/bin/docker_run.sh", "run"]
 
 
 
