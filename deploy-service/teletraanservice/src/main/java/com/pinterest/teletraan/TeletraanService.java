@@ -179,7 +179,10 @@ public class TeletraanService extends Application<TeletraanServiceConfiguration>
         filter.setInitParameter("allowCredentials", "true");
 
         //Set external alerts factory
-        context.setExternalAlertsFactory(configuration.getExternalAlertsConfigs().createExternalAlertFactory());
+        if (configuration.getExternalAlertsConfigs()!=null) {
+            context.setExternalAlertsFactory(
+                configuration.getExternalAlertsConfigs().createExternalAlertFactory());
+        }
 
     }
 
